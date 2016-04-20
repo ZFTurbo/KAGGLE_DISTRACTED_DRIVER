@@ -165,7 +165,8 @@ nb_conv = 3
 
 train_data = np.array(train_data, dtype=np.uint8)
 train_target = np.array(train_target, dtype=np.uint8)
-train_data = train_data.reshape(train_data.shape[0], 1, img_rows, img_cols)
+# train_data = train_data.reshape(train_data.shape[0], 1, img_rows, img_cols)
+train_data = train_data.transpose((0, 3, 1, 2))
 train_target = np_utils.to_categorical(train_target, nb_classes)
 train_data = train_data.astype('float32')
 train_data /= 255
@@ -224,7 +225,8 @@ else:
     (test_data, test_id) = restore_data(cache_path)
 
 test_data = np.array(test_data, dtype=np.uint8)
-test_data = test_data.reshape(test_data.shape[0], 1, img_rows, img_cols)
+# test_data = test_data.reshape(test_data.shape[0], 1, img_rows, img_cols)
+test_data = test_data.transpose((0, 3, 1, 2))
 test_data = test_data.astype('float32')
 test_data /= 255
 print('Test shape:', test_data.shape)
