@@ -160,7 +160,10 @@ def read_and_normalize_train_data(img_rows, img_cols, color_type=1):
 
     train_data = np.array(train_data, dtype=np.uint8)
     train_target = np.array(train_target, dtype=np.uint8)
-    train_data = train_data.reshape(train_data.shape[0], color_type, img_rows, img_cols)
+    if color_type == 1:
+        train_data = train_data.reshape(train_data.shape[0], 1, img_rows, img_cols)
+    else:
+        train_data = train_data.transpose((0, 3, 1, 2))
     train_target = np_utils.to_categorical(train_target, 10)
     train_data = train_data.astype('float32')
     train_data /= 255
@@ -179,7 +182,10 @@ def read_and_normalize_test_data(img_rows, img_cols, color_type=1):
         (test_data, test_id) = restore_data(cache_path)
 
     test_data = np.array(test_data, dtype=np.uint8)
-    test_data = test_data.reshape(test_data.shape[0], color_type, img_rows, img_cols)
+    if color_type == 1:
+        test_data = test_data.reshape(test_data.shape[0], 1, img_rows, img_cols)
+    else:
+        test_data = test_data.transpose((0, 3, 1, 2))
     test_data = test_data.astype('float32')
     test_data /= 255
     print('Test shape:', test_data.shape)
