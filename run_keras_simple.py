@@ -182,6 +182,7 @@ print('Split holdout: ', len(X_holdout))
 model_from_cache = 0
 if model_from_cache == 1:
     model = read_model()
+    model.compile(loss='categorical_crossentropy', optimizer='adadelta')
 else:
     model = Sequential()
     model.add(Convolution2D(nb_filters, nb_conv, nb_conv,
@@ -233,4 +234,4 @@ print('Test shape:', test_data.shape)
 print(test_data.shape[0], 'test samples')
 predictions = model.predict(test_data, batch_size=128, verbose=1)
 
-create_submission(predictions, test_id, score[0])
+create_submission(predictions, test_id, score)
